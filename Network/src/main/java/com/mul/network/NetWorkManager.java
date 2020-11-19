@@ -18,7 +18,7 @@ import android.os.Build;
  * @ClassName: NetWorkManager
  * @Author: zdd
  * @CreateDate: 2020/11/19 14:43:00
- * @Description: 网络状态管理器 https://www.jianshu.com/p/3a95523fb21b
+ * @Description: 网络状态管理器
  * @UpdateUser: 更新者
  * @UpdateDate: 2020/11/19 14:43:00
  * @UpdateRemark: 更新说明
