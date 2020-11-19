@@ -1,0 +1,26 @@
+// dependencies
+def appcompat = "1.2.0"
+
+ext {
+    // 全局配置信息
+    config = [
+            "compileSdkVersion": 30,
+            "buildToolsVersion": "29.0.3",
+            "minSdkVersion"    : 21,
+            "targetSdkVersion" : 30,
+            "versionCode"      : 1,
+            "versionName"      : "1.0.0"
+    ]
+
+    // 统一java jdk版本
+    compileOptions = [
+            "sourceCompatibility": JavaVersion.VERSION_1_8,
+            "targetCompatibility": JavaVersion.VERSION_1_8
+    ]
+
+
+    dependencies = [
+            // 兼容包
+            "appcompat": "androidx.appcompat:appcompat:${appcompat}",
+    ]
+}
