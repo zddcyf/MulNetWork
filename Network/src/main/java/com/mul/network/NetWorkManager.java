@@ -174,8 +174,7 @@ public class NetWorkManager {
 
     public void setNetWorkListener(NetWorkListener mNetWorkListener) {
         this.mNetWorkListener = mNetWorkListener;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {//API 大于26时
-            Log.i("网络状态：", "开始输出");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && null != mApplication) {//API 大于26时
             postNetState(NetStateUtils.getNetState(mApplication));
         }
     }
