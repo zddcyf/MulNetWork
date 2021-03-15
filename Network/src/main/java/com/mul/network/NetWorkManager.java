@@ -11,6 +11,7 @@ import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkRequest;
 import android.os.Build;
+import android.util.Log;
 
 /**
  * @ProjectName: NetworkUtils
@@ -173,5 +174,9 @@ public class NetWorkManager {
 
     public void setNetWorkListener(NetWorkListener mNetWorkListener) {
         this.mNetWorkListener = mNetWorkListener;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {//API 大于26时
+            Log.i("网络状态：", "开始输出");
+            postNetState(NetStateUtils.getNetState(mApplication));
+        }
     }
 }
