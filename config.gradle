@@ -1,15 +1,28 @@
 // dependencies
 def appcompat = "1.2.0"
+def recyclerview = "1.0.0"
+def constraintLayout = "1.1.3"
+def junit = "4.12"
+def runner = "1.2.0"
+def espressoCore = "3.2.0"
+
+def utils = "v1.0.6"
+def okHttp = '4.9.0'
+def conscryptAndroid = '2.5.1'
+def loggingInterceptor = '4.9.0'
+//def lifecycle = "2.2.0"
+def fastJson = '1.2.74'
 
 ext {
     // 全局配置信息
     config = [
             "compileSdkVersion": 30,
             "buildToolsVersion": "29.0.3",
+            "applicationId"    : "com.mul.mulnetwork",
             "minSdkVersion"    : 21,
             "targetSdkVersion" : 30,
-            "versionCode"      : 2,
-            "versionName"      : "v1.0.1"
+            "versionCode"      : 3,
+            "versionName"      : "v1.0.2"
     ]
 
     // 统一java jdk版本
@@ -20,7 +33,23 @@ ext {
 
 
     dependencies = [
+            "appcompat"       : "androidx.appcompat:appcompat:${appcompat}",
+            "material"        : "com.google.android.material:material:${recyclerview}",
+            "recyclerview"    : "androidx.recyclerview:recyclerview:${recyclerview}",
+            "constraintLayout": "androidx.constraintlayout:constraintlayout:${constraintLayout}",
+            "junit"           : "junit:junit:${junit}",
+            "runner"          : "androidx.test:runner:${runner}",
+            "espressoCore"    : "androidx.test.espresso:espresso-core:${espressoCore}",
+
+
             // 兼容包
-            "appcompat": "androidx.appcompat:appcompat:${appcompat}",
+            "utils"  : "com.github.zddcyf:utils:${utils}",
+            // 网络请求
+            "okHttp"            : "com.squareup.okhttp3:okhttp:${okHttp}",
+            "conscryptAndroid"  : "org.conscrypt:conscrypt-android:${conscryptAndroid}",
+            // 网络日志拦截器
+            "loggingInterceptor": "com.squareup.okhttp3:logging-interceptor:${loggingInterceptor}",
+            // json生成与解析
+            "fastJson"           : "com.alibaba:fastjson:${fastJson}",
     ]
 }

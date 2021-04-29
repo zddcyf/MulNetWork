@@ -6,9 +6,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
-import com.mul.network.NetWorkListener;
-import com.mul.network.NetWorkManager;
-import com.mul.network.NetWorkStatus;
+import com.mul.network.http.ApiService;
+import com.mul.network.http.callback.JsonCallBack;
+import com.mul.network.http.response.ApiResponse;
+import com.mul.network.status.NetWorkListener;
+import com.mul.network.status.NetWorkManager;
+import com.mul.network.status.NetWorkStatus;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,5 +30,15 @@ public class MainActivity extends AppCompatActivity {
                 test.setText(mS);
             }
         });
+
+        ApiService.obtain().get("/www/ddd/")
+                .addParam("", "")
+                .addHeader("", "")
+                .execute(new JsonCallBack<Object>() {
+                    @Override
+                    public void onSuccess(ApiResponse<Object> mResponse) {
+                        super.onSuccess(mResponse);
+                    }
+                });
     }
 }

@@ -1,4 +1,6 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'//this
+group='com.github.zddcyf'//this
 
 android {
     compileSdkVersion rootProject.ext.config.compileSdkVersion
@@ -9,7 +11,7 @@ android {
         versionCode rootProject.ext.config.versionCode
         versionName rootProject.ext.config.versionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles "consumer-rules.pro"
+//        consumerProguardFiles "consumer-rules.pro"
     }
 
     compileOptions {
@@ -28,4 +30,14 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation rootProject.ext.dependencies["appcompat"]
+    implementation rootProject.ext.dependencies["okHttp"]
+    implementation rootProject.ext.dependencies["loggingInterceptor"]
+    api rootProject.ext.dependencies["conscryptAndroid"]
+    implementation rootProject.ext.dependencies["utils"]
+
+//    api rootProject.ext.dependencies["lifecycle"]
+//    annotationProcessor rootProject.ext.dependencies["lifecycleCompiler"]
+
+    // json转换工具
+    api rootProject.ext.dependencies["fastJson"]
 }

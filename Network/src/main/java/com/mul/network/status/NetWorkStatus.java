@@ -1,8 +1,8 @@
-package com.mul.network;
+package com.mul.network.status;
 
 /**
- * @ProjectName: NetworkUtils
- * @Package: com.mul.network
+ * @ProjectName: MulNetWork
+ * @Package: com.mul.network.status
  * @ClassName: NetWorkStatus
  * @Author: zdd
  * @CreateDate: 2020/11/19 14:57:55

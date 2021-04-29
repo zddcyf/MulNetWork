@@ -1,4 +1,4 @@
-package com.mul.network;
+package com.mul.network.status;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -8,8 +8,8 @@ import android.net.wifi.WifiManager;
 import android.telephony.TelephonyManager;
 
 /**
- * @ProjectName: NetworkUtils
- * @Package: com.mul.network
+ * @ProjectName: MulNetWork
+ * @Package: com.mul.network.status
  * @ClassName: NetStateUtils
  * @Author: zdd
  * @CreateDate: 2020/11/19 15:05:36

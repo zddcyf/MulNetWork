@@ -1,4 +1,4 @@
-package com.mul.network;
+package com.mul.network.status;
 
 import android.app.Application;
 import android.content.BroadcastReceiver;
@@ -11,11 +11,10 @@ import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkRequest;
 import android.os.Build;
-import android.util.Log;
 
 /**
- * @ProjectName: NetworkUtils
- * @Package: com.mul.network
+ * @ProjectName: MulNetWork
+ * @Package: com.mul.network.status
  * @ClassName: NetWorkManager
  * @Author: zdd
  * @CreateDate: 2020/11/19 14:43:00

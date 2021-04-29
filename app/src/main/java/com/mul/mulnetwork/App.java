@@ -2,7 +2,9 @@ package com.mul.mulnetwork;
 
 import android.app.Application;
 
-import com.mul.network.NetWorkManager;
+import com.mul.network.http.ApiService;
+import com.mul.network.http.convert.JsonConvert;
+import com.mul.network.status.NetWorkManager;
 
 /**
  * @ProjectName: NetworkUtils
@@ -21,6 +23,15 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         NetWorkManager.getInstance().init(this);
+        ApiService.obtain()
+                .setCode("code")
+                .setCode(200)
+                .setReadTimeOut(5)
+                .setWriteTimeOut(5)
+                .setConnectTimeOut(5)
+                .setConvert(new JsonConvert())
+                .setBaseUrl("http://www.baidu.com/")
+                .create();
     }
 
     @Override

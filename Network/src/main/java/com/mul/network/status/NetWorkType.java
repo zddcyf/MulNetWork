@@ -1,10 +1,10 @@
-package com.mul.network;
+package com.mul.network.status;
 
 import androidx.annotation.IntDef;
 
 /**
- * @ProjectName: NetworkUtils
- * @Package: com.mul.network
+ * @ProjectName: MulNetWork
+ * @Package: com.mul.network.status
  * @ClassName: NetWorkType
  * @Author: zdd
  * @CreateDate: 2020/11/19 14:58:28
