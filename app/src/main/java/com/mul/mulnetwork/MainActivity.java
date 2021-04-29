@@ -22,13 +22,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         test = findViewById(R.id.test);
-        NetWorkManager.getInstance().setNetWorkListener(new NetWorkListener() {
-            @Override
-            public void onNetWorkChange(NetWorkStatus mNetWorkStatus) {
-                String mS = mNetWorkStatus.netWorkType + "==" + mNetWorkStatus.netWorkTypeStr;
-                Log.i("网络状态：", mS);
-                test.setText(mS);
-            }
+        NetWorkManager.getInstance().setNetWorkListener(mNetWorkStatus -> {
+            String mS = mNetWorkStatus.netWorkType + "==" + mNetWorkStatus.netWorkTypeStr;
+            Log.i("网络状态：", mS);
+            test.setText(mS);
         });
 
         ApiService.obtain().get("/www/ddd/")

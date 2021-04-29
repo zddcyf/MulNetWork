@@ -12,6 +12,8 @@ import android.net.NetworkCapabilities;
 import android.net.NetworkRequest;
 import android.os.Build;
 
+import com.mul.utils.manager.GlobalManager;
+
 /**
  * @ProjectName: MulNetWork
  * @Package: com.mul.network.status
@@ -42,9 +44,13 @@ public class NetWorkManager {
         return NetWorkManagerSingleton.NET_WORK_MANAGER;
     }
 
+    public void init() {
+        init(GlobalManager.INSTANCE.app);
+    }
+
     public void init(Application mApplication) {
         if (null == mApplication) {
-            new NullPointerException("mApplication can not be null");
+            throw new NullPointerException("mApplication can not be null");
         }
         this.mApplication = mApplication;
         initMonitor();
@@ -90,10 +96,9 @@ public class NetWorkManager {
     /**
      * 21以及26以上网络状态监听
      */
-    private ConnectivityManager.NetworkCallback mNetworkCallback = new ConnectivityManager.NetworkCallback() {
+    private final ConnectivityManager.NetworkCallback mNetworkCallback = new ConnectivityManager.NetworkCallback() {
         /**
          * 网络可用的回调连接成功
-         * @param network
          */
         @Override
         public void onAvailable(Network network) {
@@ -111,7 +116,6 @@ public class NetWorkManager {
 
         /**
          * 网络不可用时调用和onAvailable成对出现
-         * @param network
          */
         @Override
         public void onLost(Network network) {
@@ -129,8 +133,6 @@ public class NetWorkManager {
 
         /**
          * 网络功能更改 满足需求时调用
-         * @param network
-         * @param networkCapabilities
          */
         @Override
         public void onCapabilitiesChanged(Network network, NetworkCapabilities networkCapabilities) {
@@ -139,8 +141,6 @@ public class NetWorkManager {
 
         /**
          * 网络连接属性修改时调用
-         * @param network
-         * @param linkProperties
          */
         @Override
         public void onLinkPropertiesChanged(Network network, LinkProperties linkProperties) {
@@ -156,7 +156,7 @@ public class NetWorkManager {
         }
     };
 
-    private BroadcastReceiver receiver = new BroadcastReceiver() {
+    private final BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equalsIgnoreCase(ANDROID_NET_CHANGE_ACTION)) {

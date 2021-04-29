@@ -23,8 +23,8 @@ public class NetWorkStatus {
      * 8 = 无网络
      */
     public @NetWorkType
-    int netWorkType; // 网络类型
+    int netWorkType = NetWorkType.NW_UNKNOWN; // 网络类型
 
-    public String netWorkTypeStr;
-    public String wifiName;
+    public String netWorkTypeStr = "无网络";
+    public String wifiName = "";
 }

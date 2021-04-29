@@ -20,7 +20,7 @@ import android.telephony.TelephonyManager;
  * @Version: 1.0.0
  */
 class NetStateUtils {
-    private static NetWorkStatus mNetWorkStatus = new NetWorkStatus();
+    private static final NetWorkStatus mNetWorkStatus = new NetWorkStatus();
 
     public static NetWorkStatus getNetState(Context context) {
         //结果返回值
@@ -77,6 +77,10 @@ class NetStateUtils {
             mNetWorkStatus.netWorkType = NetWorkType.NW_ETHERNET;
             mNetWorkStatus.netWorkTypeStr = "以太网";
         }
+        return mNetWorkStatus;
+    }
+
+    public static NetWorkStatus getNetWorkStatus() {
         return mNetWorkStatus;
     }
 }
