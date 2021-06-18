@@ -7,6 +7,15 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.telephony.TelephonyManager;
 
+import com.mul.utils.log.LogExceptionResult;
+import com.mul.utils.log.LogUtil;
+
+import java.net.Inet6Address;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.util.Enumeration;
+
 /**
  * @ProjectName: MulNetWork
  * @Package: com.mul.network.status
@@ -44,6 +53,7 @@ class NetStateUtils {
             WifiManager wifiMgr = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
             WifiInfo info = wifiMgr.getConnectionInfo();
             mNetWorkStatus.wifiName = info != null ? info.getSSID() : null;
+            mNetWorkStatus.ip = int2ip(info.getIpAddress());
         } else if (nType == ConnectivityManager.TYPE_MOBILE) {
             int nSubType = networkInfo.getSubtype();
             TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService
@@ -73,14 +83,57 @@ class NetStateUtils {
                 mNetWorkStatus.netWorkType = NetWorkType.NW_2G;
                 mNetWorkStatus.netWorkTypeStr = "2g";
             }
+            mNetWorkStatus.ip = getLocalIpAddress();
         } else if (nType == ConnectivityManager.TYPE_ETHERNET) {
             mNetWorkStatus.netWorkType = NetWorkType.NW_ETHERNET;
             mNetWorkStatus.netWorkTypeStr = "以太网";
+            mNetWorkStatus.ip = getLocalIpAddress();
         }
         return mNetWorkStatus;
     }
 
     public static NetWorkStatus getNetWorkStatus() {
         return mNetWorkStatus;
+    }
+
+    /**
+     * 将ip的整数形式转换成ip形式
+     *
+     * @param ipInt 整数形式ip地址
+     * @return ip地址
+     */
+    public static String int2ip(int ipInt) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(ipInt & 0xFF).append(".");
+        sb.append((ipInt >> 8) & 0xFF).append(".");
+        sb.append((ipInt >> 16) & 0xFF).append(".");
+        sb.append((ipInt >> 24) & 0xFF);
+        return sb.toString();
+    }
+
+    /**
+     * 获取以太网ip地址
+     *
+     * @return ip地址
+     */
+    private static String getLocalIpAddress() {
+        String ipAddress = null;
+        try {
+            for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements(); ) {
+                NetworkInterface intf = en.nextElement();
+                for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses(); enumIpAddr.hasMoreElements(); ) {
+                    InetAddress inetAddress = enumIpAddr.nextElement();
+                    if (!inetAddress.isLoopbackAddress()) {
+                        ipAddress = inetAddress.getHostAddress();
+                        if (!ipAddress.contains("::"))
+                            return inetAddress.getHostAddress();
+                    } else continue;
+
+            }
+        }} catch(SocketException ex){
+            ipAddress = LogExceptionResult.getException(ex);
+            LogUtil.e("NetStateUtils", LogExceptionResult.getException(ex));
+        }
+        return ipAddress;
     }
 }

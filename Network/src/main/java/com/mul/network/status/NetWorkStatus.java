@@ -27,4 +27,5 @@ public class NetWorkStatus {
 
     public String netWorkTypeStr = "无网络";
     public String wifiName = "";
+    public String ip = "";
 }

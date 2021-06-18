@@ -23,7 +23,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         test = findViewById(R.id.test);
         NetWorkManager.getInstance().setNetWorkListener(mNetWorkStatus -> {
-            String mS = mNetWorkStatus.netWorkType + "==" + mNetWorkStatus.netWorkTypeStr;
+            String mS = mNetWorkStatus.netWorkType + "==" + mNetWorkStatus.netWorkTypeStr
+                    + "==" + mNetWorkStatus.ip;
             Log.i("网络状态：", mS);
             test.setText(mS);
         });

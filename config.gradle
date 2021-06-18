@@ -22,7 +22,7 @@ ext {
             "minSdkVersion"    : 21,
             "targetSdkVersion" : 30,
             "versionCode"      : 4,
-            "versionName"      : "v1.0.3"
+            "versionName"      : "v1.0.4"
     ]
 
     // 统一java jdk版本
