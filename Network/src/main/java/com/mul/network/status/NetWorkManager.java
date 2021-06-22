@@ -12,6 +12,8 @@ import android.net.NetworkCapabilities;
 import android.net.NetworkRequest;
 import android.os.Build;
 
+import com.mul.utils.log.LogExceptionResult;
+import com.mul.utils.log.LogUtil;
 import com.mul.utils.manager.GlobalManager;
 
 /**
@@ -27,6 +29,7 @@ import com.mul.utils.manager.GlobalManager;
  * @Version: 1.0.0
  */
 public class NetWorkManager {
+    public static final String TAG = "NetWorkManager";
     private Application mApplication;
     private static final String ANDROID_NET_CHANGE_ACTION = "android.net.conn.CONNECTIVITY_CHANGE";
     private NetWorkListener mNetWorkListener;
@@ -78,18 +81,16 @@ public class NetWorkManager {
      * 反注册广播
      */
     public void unregisterReceiver() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {//API 大于26时
-            if (null != mNetworkCallback) {
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {//API 大于26时
                 mConnectivityManager.unregisterNetworkCallback(mNetworkCallback);
-            }
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {//API 大于21时
-            if (null != mNetworkCallback) {
+            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {//API 大于21时
                 mConnectivityManager.unregisterNetworkCallback(mNetworkCallback);
-            }
-        } else {//低版本
-            if (null != receiver) {
+            } else {//低版本
                 mApplication.unregisterReceiver(receiver);
             }
+        } catch (Exception mE) {
+            LogUtil.saveE(TAG, LogExceptionResult.getException(mE));
         }
     }
 
