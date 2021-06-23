@@ -6,7 +6,7 @@ def junit = "4.12"
 def runner = "1.2.0"
 def espressoCore = "3.2.0"
 
-def utils = "v1.0.7"
+def utils = "v1.0.8"
 def okHttp = '4.9.0'
 def conscryptAndroid = '2.5.1'
 def loggingInterceptor = '4.9.0'
@@ -21,8 +21,8 @@ ext {
             "applicationId"    : "com.mul.mulnetwork",
             "minSdkVersion"    : 21,
             "targetSdkVersion" : 30,
-            "versionCode"      : 6,
-            "versionName"      : "v1.0.6"
+            "versionCode"      : 7,
+            "versionName"      : "v1.0.7"
     ]
 
     // 统一java jdk版本
