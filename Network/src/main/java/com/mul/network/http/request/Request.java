@@ -13,12 +13,16 @@ import com.mul.network.http.convert.Convert;
 import com.mul.network.http.handler.HandlerManager;
 import com.mul.network.http.response.ApiResponse;
 import com.mul.network.http.utils.UrlCreatorUtils;
+import com.mul.network.status.NetStateUtils;
+import com.mul.network.status.NetWorkStatus;
+import com.mul.network.status.NetWorkType;
 import com.mul.utils.DataUtils;
 import com.mul.utils.GenericUtils;
 import com.mul.utils.StringUtils;
 import com.mul.utils.db.manager.ApiCacheManager;
 import com.mul.utils.log.LogExceptionResult;
 import com.mul.utils.log.LogUtil;
+import com.mul.utils.manager.GlobalManager;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
@@ -177,7 +181,7 @@ public abstract class Request<B, R extends Request<B, R>> implements Cloneable {
      */
     private boolean checkUrl(JsonCallBack<B> mCallBack) {
         if (!mUrl.contains("http://") && !mUrl.contains("https://")) {
-            requestError(mCallBack, NetworkConfig.ERROR_MESSAGE_102, NetworkConfig.ERROR_STATUS_102);
+            isNetWork(mCallBack, NetworkConfig.ERROR_MESSAGE_102, NetworkConfig.ERROR_STATUS_102);
             return true;
         }
         return false;
@@ -202,7 +206,7 @@ public abstract class Request<B, R extends Request<B, R>> implements Cloneable {
                     Response response = getCall().execute();
                     parseResponse(response, callBack);
                 } catch (Exception e) {
-                    requestError((JsonCallBack<B>) callBack, NetworkConfig.ERROR_MESSAGE_104 + "," + LogExceptionResult.getException(e), NetworkConfig.ERROR_STATUS_104);
+                    isNetWork((JsonCallBack<B>) callBack, NetworkConfig.ERROR_MESSAGE_104 + "," + LogExceptionResult.getException(e), NetworkConfig.ERROR_STATUS_104);
                 }
             });
         }
@@ -228,7 +232,7 @@ public abstract class Request<B, R extends Request<B, R>> implements Cloneable {
             getCall().enqueue(new Callback() {
                 @Override
                 public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                    requestError(callBack, NetworkConfig.ERROR_MESSAGE_101 + "," + e.getMessage(), NetworkConfig.ERROR_STATUS_101);
+                    isNetWork(callBack, NetworkConfig.ERROR_MESSAGE_101 + "," + e.getMessage(), NetworkConfig.ERROR_STATUS_101);
                 }
 
                 @Override
@@ -250,7 +254,27 @@ public abstract class Request<B, R extends Request<B, R>> implements Cloneable {
             apiResponse.url = getErrorUrl();
             HandlerManager.getInstance().getHandler().post(() -> onCacheSuccess(callBack));
         } else {
-            requestError(callBack, NetworkConfig.ERROR_MESSAGE_103, NetworkConfig.ERROR_STATUS_103);
+            isNetWork(callBack, NetworkConfig.ERROR_MESSAGE_103, NetworkConfig.ERROR_STATUS_103);
+        }
+    }
+
+    /**
+     * 请求异常
+     *
+     * @param callBack      回调
+     * @param mErrorMessage 异常信息
+     * @param mErrorStatus  异常状态
+     */
+    private void isNetWork(JsonCallBack<B> callBack, String mErrorMessage, int mErrorStatus) {
+        if (!DataUtils.isEmpty(GlobalManager.INSTANCE.context)) {
+            NetWorkStatus mNetState = NetStateUtils.getNetState(GlobalManager.INSTANCE.context);
+            if (mNetState.netWorkType == NetWorkType.NW_UNKNOWN) {
+                requestError(callBack, NetworkConfig.ERROR_MESSAGE_105, NetworkConfig.ERROR_STATUS_105);
+            } else {
+                requestError(callBack, mErrorMessage, mErrorStatus);
+            }
+        } else {
+            requestError(callBack, mErrorMessage, mErrorStatus);
         }
     }
 
@@ -262,11 +286,16 @@ public abstract class Request<B, R extends Request<B, R>> implements Cloneable {
      * @param mErrorStatus  异常状态
      */
     private void requestError(JsonCallBack<B> callBack, String mErrorMessage, int mErrorStatus) {
-        apiResponse = new ApiResponse<>();
-        apiResponse.message = mErrorMessage;
-        apiResponse.status = mErrorStatus;
-        apiResponse.url = getErrorUrl();
-        HandlerManager.getInstance().getHandler().post(() -> onError(callBack));
+        if (!DataUtils.isEmpty(GlobalManager.INSTANCE.context)) {
+            NetWorkStatus mNetState = NetStateUtils.getNetState(GlobalManager.INSTANCE.context);
+
+        } else {
+            apiResponse = new ApiResponse<>();
+            apiResponse.message = mErrorMessage;
+            apiResponse.status = mErrorStatus;
+            apiResponse.url = getErrorUrl();
+            HandlerManager.getInstance().getHandler().post(() -> onError(callBack));
+        }
     }
 
     /**

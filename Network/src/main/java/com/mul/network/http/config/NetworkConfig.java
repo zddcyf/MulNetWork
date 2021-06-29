@@ -44,4 +44,10 @@ public interface NetworkConfig {
      */
     String ERROR_MESSAGE_104 = "同步接口请求出错";
     int ERROR_STATUS_104 = 104;
+
+    /**
+     * 同步接口请求出错
+     */
+    String ERROR_MESSAGE_105 = "无网络";
+    int ERROR_STATUS_105 = 105;
 }

@@ -28,7 +28,7 @@ import java.util.Enumeration;
  * @UpdateRemark: 更新说明
  * @Version: 1.0.0
  */
-class NetStateUtils {
+public class NetStateUtils {
     private static final NetWorkStatus mNetWorkStatus = new NetWorkStatus();
 
     public static NetWorkStatus getNetState(Context context) {
