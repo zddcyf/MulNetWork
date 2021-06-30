@@ -286,16 +286,11 @@ public abstract class Request<B, R extends Request<B, R>> implements Cloneable {
      * @param mErrorStatus  异常状态
      */
     private void requestError(JsonCallBack<B> callBack, String mErrorMessage, int mErrorStatus) {
-        if (!DataUtils.isEmpty(GlobalManager.INSTANCE.context)) {
-            NetWorkStatus mNetState = NetStateUtils.getNetState(GlobalManager.INSTANCE.context);
-
-        } else {
-            apiResponse = new ApiResponse<>();
-            apiResponse.message = mErrorMessage;
-            apiResponse.status = mErrorStatus;
-            apiResponse.url = getErrorUrl();
-            HandlerManager.getInstance().getHandler().post(() -> onError(callBack));
-        }
+        apiResponse = new ApiResponse<>();
+        apiResponse.message = mErrorMessage;
+        apiResponse.status = mErrorStatus;
+        apiResponse.url = getErrorUrl();
+        HandlerManager.getInstance().getHandler().post(() -> onError(callBack));
     }
 
     /**

@@ -21,8 +21,8 @@ ext {
             "applicationId"    : "com.mul.mulnetwork",
             "minSdkVersion"    : 21,
             "targetSdkVersion" : 30,
-            "versionCode"      : 8,
-            "versionName"      : "v1.0.8"
+            "versionCode"      : 9,
+            "versionName"      : "v1.0.9"
     ]
 
     // 统一java jdk版本
