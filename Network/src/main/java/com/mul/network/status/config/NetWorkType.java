@@ -1,4 +1,4 @@
-package com.mul.network.status;
+package com.mul.network.status.config;
 
 import androidx.annotation.IntDef;
 

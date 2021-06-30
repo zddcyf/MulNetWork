@@ -1,4 +1,4 @@
-package com.mul.network.status;
+package com.mul.network.status.utils;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -7,10 +7,11 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.telephony.TelephonyManager;
 
+import com.mul.network.status.config.NetWorkStatus;
+import com.mul.network.status.config.NetWorkType;
 import com.mul.utils.log.LogExceptionResult;
 import com.mul.utils.log.LogUtil;
 
-import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;

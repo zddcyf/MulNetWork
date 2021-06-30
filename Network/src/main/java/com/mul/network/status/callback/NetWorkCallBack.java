@@ -1,4 +1,6 @@
-package com.mul.network.status;
+package com.mul.network.status.callback;
+
+import com.mul.network.status.config.NetWorkStatus;
 
 /**
  * @ProjectName: MulNetWork
@@ -12,11 +14,11 @@ package com.mul.network.status;
  * @UpdateRemark: 更新说明
  * @Version: 1.0.0
  */
-public interface NetWorkListener {
+public interface NetWorkCallBack {
     /**
      * 网络状态发生改变
      *
-     * @param mNetWorkStatus
+     * @param mNetWorkStatus 网络状态
      */
     void onNetWorkChange(NetWorkStatus mNetWorkStatus);
 }

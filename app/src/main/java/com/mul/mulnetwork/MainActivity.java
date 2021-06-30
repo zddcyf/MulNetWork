@@ -9,9 +9,7 @@ import android.widget.TextView;
 import com.mul.network.http.ApiService;
 import com.mul.network.http.callback.JsonCallBack;
 import com.mul.network.http.response.ApiResponse;
-import com.mul.network.status.NetWorkListener;
 import com.mul.network.status.NetWorkManager;
-import com.mul.network.status.NetWorkStatus;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,7 +24,9 @@ public class MainActivity extends AppCompatActivity {
             String mS = mNetWorkStatus.netWorkType + "==" + mNetWorkStatus.netWorkTypeStr
                     + "==" + mNetWorkStatus.ip;
             Log.i("网络状态：", mS);
-            test.setText(mS);
+            runOnUiThread(()-> {
+                test.setText(mS);
+            });
         });
 
         ApiService.obtain().get("/www/ddd/")

@@ -12,6 +12,10 @@ import android.net.NetworkCapabilities;
 import android.net.NetworkRequest;
 import android.os.Build;
 
+import com.mul.network.status.callback.NetWorkCallBack;
+import com.mul.network.status.config.NetWorkStatus;
+import com.mul.network.status.config.NetWorkType;
+import com.mul.network.status.utils.NetStateUtils;
 import com.mul.utils.log.LogExceptionResult;
 import com.mul.utils.log.LogUtil;
 import com.mul.utils.manager.GlobalManager;
@@ -32,7 +36,7 @@ public class NetWorkManager {
     public static final String TAG = "NetWorkManager";
     private Application mApplication;
     private static final String ANDROID_NET_CHANGE_ACTION = "android.net.conn.CONNECTIVITY_CHANGE";
-    private NetWorkListener mNetWorkListener;
+    private NetWorkCallBack mNetWorkListener;
     private ConnectivityManager mConnectivityManager;
 
     private NetWorkManager() {
@@ -63,17 +67,22 @@ public class NetWorkManager {
      * 初始化监听方式
      */
     private void initMonitor() {
-        mConnectivityManager = (ConnectivityManager) mApplication.getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {//API 大于26时
-            mConnectivityManager.registerDefaultNetworkCallback(mNetworkCallback);
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {//API 大于21时
-            NetworkRequest.Builder builder = new NetworkRequest.Builder();
-            NetworkRequest request = builder.build();
-            mConnectivityManager.registerNetworkCallback(request, mNetworkCallback);
-        } else {//低版本
-            IntentFilter intentFilter = new IntentFilter();
-            intentFilter.addAction(ANDROID_NET_CHANGE_ACTION);
-            mApplication.registerReceiver(receiver, intentFilter);
+        try {
+            LogUtil.saveE(TAG, "mNetworkCallback=" + mNetworkCallback);
+            mConnectivityManager = (ConnectivityManager) mApplication.getSystemService(Context.CONNECTIVITY_SERVICE);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {//API 大于26时
+                mConnectivityManager.registerDefaultNetworkCallback(mNetworkCallback);
+            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {//API 大于21时
+                NetworkRequest.Builder builder = new NetworkRequest.Builder();
+                NetworkRequest request = builder.build();
+                mConnectivityManager.registerNetworkCallback(request, mNetworkCallback);
+            } else {//低版本
+                IntentFilter intentFilter = new IntentFilter();
+                intentFilter.addAction(ANDROID_NET_CHANGE_ACTION);
+                mApplication.registerReceiver(receiver, intentFilter);
+            }
+        } catch (Exception mE) {
+            LogUtil.saveI(TAG, LogExceptionResult.getException(mE));
         }
     }
 
@@ -82,6 +91,7 @@ public class NetWorkManager {
      */
     public void unregisterReceiver() {
         try {
+            LogUtil.saveE(TAG, "mNetworkCallback=" + mNetworkCallback);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {//API 大于26时
                 mConnectivityManager.unregisterNetworkCallback(mNetworkCallback);
             } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {//API 大于21时
@@ -172,7 +182,7 @@ public class NetWorkManager {
         }
     }
 
-    public void setNetWorkListener(NetWorkListener mNetWorkListener) {
+    public void setNetWorkListener(NetWorkCallBack mNetWorkListener) {
         this.mNetWorkListener = mNetWorkListener;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && null != mApplication) {//API 大于26时
             postNetState(NetStateUtils.getNetState(mApplication));
