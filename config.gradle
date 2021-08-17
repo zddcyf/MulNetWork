@@ -1,3 +1,6 @@
+def versionCode = 2
+def versionName = "v1.0.1"
+
 // dependencies
 def appcompat = "1.2.0"
 def recyclerview = "1.0.0"
@@ -6,7 +9,7 @@ def junit = "4.12"
 def runner = "1.2.0"
 def espressoCore = "3.2.0"
 
-def utils = "v1.0.8"
+def utils = "v1.0.1"
 def okHttp = '4.9.0'
 def conscryptAndroid = '2.5.1'
 def loggingInterceptor = '4.9.0'
@@ -21,8 +24,8 @@ ext {
             "applicationId"    : "com.mul.mulnetwork",
             "minSdkVersion"    : 21,
             "targetSdkVersion" : 30,
-            "versionCode"      : 10,
-            "versionName"      : "v1.1.0"
+            "versionCode"      : versionCode,
+            "versionName"      : versionName
     ]
 
     // 统一java jdk版本
@@ -33,23 +36,23 @@ ext {
 
 
     dependencies = [
-            "appcompat"       : "androidx.appcompat:appcompat:${appcompat}",
-            "material"        : "com.google.android.material:material:${recyclerview}",
-            "recyclerview"    : "androidx.recyclerview:recyclerview:${recyclerview}",
-            "constraintLayout": "androidx.constraintlayout:constraintlayout:${constraintLayout}",
-            "junit"           : "junit:junit:${junit}",
-            "runner"          : "androidx.test:runner:${runner}",
-            "espressoCore"    : "androidx.test.espresso:espresso-core:${espressoCore}",
+            "appcompat"         : "androidx.appcompat:appcompat:${appcompat}",
+            "material"          : "com.google.android.material:material:${recyclerview}",
+            "recyclerview"      : "androidx.recyclerview:recyclerview:${recyclerview}",
+            "constraintLayout"  : "androidx.constraintlayout:constraintlayout:${constraintLayout}",
+            "junit"             : "junit:junit:${junit}",
+            "runner"            : "androidx.test:runner:${runner}",
+            "espressoCore"      : "androidx.test.espresso:espresso-core:${espressoCore}",
 
 
             // 兼容包
-            "utils"  : "com.github.zddcyf:utils:${utils}",
+            "utils"             : "com.gitee.zhangdcyf:utils:${utils}",
             // 网络请求
             "okHttp"            : "com.squareup.okhttp3:okhttp:${okHttp}",
             "conscryptAndroid"  : "org.conscrypt:conscrypt-android:${conscryptAndroid}",
             // 网络日志拦截器
             "loggingInterceptor": "com.squareup.okhttp3:logging-interceptor:${loggingInterceptor}",
             // json生成与解析
-            "fastJson"           : "com.alibaba:fastjson:${fastJson}",
+            "fastJson"          : "com.alibaba:fastjson:${fastJson}",
     ]
 }
