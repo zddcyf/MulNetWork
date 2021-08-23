@@ -1,5 +1,5 @@
-def versionCode = 2
-def versionName = "v1.0.1"
+def versionCode = 3
+def versionName = "v1.0.2"
 
 // dependencies
 def appcompat = "1.2.0"
@@ -9,7 +9,7 @@ def junit = "4.12"
 def runner = "1.2.0"
 def espressoCore = "3.2.0"
 
-def utils = "v1.0.1"
+def utils = "v1.0.3"
 def okHttp = '4.9.0'
 def conscryptAndroid = '2.5.1'
 def loggingInterceptor = '4.9.0'

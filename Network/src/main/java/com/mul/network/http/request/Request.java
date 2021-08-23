@@ -201,14 +201,12 @@ public abstract class Request<B, R extends Request<B, R>> implements Cloneable {
         }
 
         if (mStrategy != CacheStrategy.CACHE_ONLY) {
-            ApiService.obtain().getExecutors().execute(() -> {
-                try {
-                    Response response = getCall().execute();
-                    parseResponse(response, callBack);
-                } catch (Exception e) {
-                    isNetWork((JsonCallBack<B>) callBack, NetworkConfig.ERROR_MESSAGE_104 + "," + LogExceptionResult.getException(e), NetworkConfig.ERROR_STATUS_104);
-                }
-            });
+            try {
+                Response response = getCall().execute();
+                parseResponse(response, callBack);
+            } catch (IOException e) {
+                isNetWork((JsonCallBack<B>) callBack, NetworkConfig.ERROR_MESSAGE_104 + "," + LogExceptionResult.getException(e), NetworkConfig.ERROR_STATUS_104);
+            }
         }
     }
 
@@ -388,7 +386,9 @@ public abstract class Request<B, R extends Request<B, R>> implements Cloneable {
      */
     private void addHeaders(okhttp3.Request.Builder builder) {
         for (Map.Entry<String, String> entry : mHeaders.entrySet()) {
-            builder.addHeader(entry.getKey(), entry.getValue());
+            if (!DataUtils.isEmpty(entry.getKey())) {
+                builder.addHeader(entry.getKey(), entry.getValue());
+            }
         }
     }
 
