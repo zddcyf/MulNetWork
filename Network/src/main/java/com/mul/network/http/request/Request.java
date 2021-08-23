@@ -201,12 +201,14 @@ public abstract class Request<B, R extends Request<B, R>> implements Cloneable {
         }
 
         if (mStrategy != CacheStrategy.CACHE_ONLY) {
-            try {
-                Response response = getCall().execute();
-                parseResponse(response, callBack);
-            } catch (IOException e) {
-                isNetWork((JsonCallBack<B>) callBack, NetworkConfig.ERROR_MESSAGE_104 + "," + LogExceptionResult.getException(e), NetworkConfig.ERROR_STATUS_104);
-            }
+            ApiService.obtain().getExecutors().execute(() -> {
+                try {
+                    Response response = getCall().execute();
+                    parseResponse(response, callBack);
+                } catch (Exception e) {
+                    isNetWork((JsonCallBack<B>) callBack, NetworkConfig.ERROR_MESSAGE_104 + "," + LogExceptionResult.getException(e), NetworkConfig.ERROR_STATUS_104);
+                }
+            });
         }
     }
 
